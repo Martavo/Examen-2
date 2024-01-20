@@ -1,6 +1,6 @@
 <?php
 
-class jugador{
+class Jugador {
     private string $nombre;
     private int $madera;
     private int $roca;
@@ -8,55 +8,72 @@ class jugador{
     private int $arcilla;
     private int $lana;
 
-    public function __construct($nombre, $madera, $roca, $cereales, $arcilla, $lana){
-        $this -> nombre = $nombre;
-        $this -> madera = $madera;
-        $this -> roca = $roca;
-        $this -> cereales = $cereales;
-        $this -> arcilla = $arcilla;
-        $this -> lana = $lana;
+    public function __construct($nombre, $madera, $roca, $cereales, $arcilla, $lana) {
+        $this->nombre = $nombre;
+        $this->madera = $madera;
+        $this->roca = $roca;
+        $this->cereales = $cereales;
+        $this->arcilla = $arcilla;
+        $this->lana = $lana;
     }
 
-    public function getMadera(){
-        return $this -> madera;
-    }
+    public function comprarCamino() {
+        if ($this->madera >= 1 && $this->arcilla >= 1) {
 
-    public function getRoca(){
-        return $this -> roca;
-    }
+            $this->madera -= 1;
+            $this->arcilla -= 1;
 
-    public function getCereales(){
-        return $this -> cereales;
-    }
-
-    public function getArcilla(){
-        return $this -> arcilla;
-    }
-
-    public function getLana(){
-        return $this -> lana;
-    }
-    
-
-
-    function comprar($madera, $arcilla){
-
-        echo "¿Que quieres comprar? (Camino, poblado, ciudad o carta de desarrollo)";
-        $compra = fgets(STDIN);
-        $compra = strtolower($compra);
-    
-        if ($compra == "camino"){
-            if ($madera >= 1 && $arcilla >= 1){
-                $madera = $madera -1;
-                $arcilla = $arcilla -1;
-                echo "Has comprado un camino";
-            }else{
-                echo "No tienes suficientes recursos";
-            }
+            return "Has comprado un camino.";
+        } else {
+            return "No tienes suficientes recursos para comprar un camino.";
         }
     }
 
-}
+    public function comprarPoblado() {
+        if ($this->madera >= 1 && $this->arcilla >= 1 && $this->cereales >= 1 && $this->lana >= 1) {
+            
+            $this->madera -= 1;
+            $this->cereales -= 1;
+            $this->arcilla -= 1;
+            $this->lana -= 1;
+            
+            return "Has comprado un poblado.";
+        } else {
+            return "No tienes suficientes recursos para comprar un camino.";
+        }
+    }
 
+    public function comprarCiudad() {
+        if ($this->roca >= 3 && $this->cereales >= 2 ) {
+            
+            $this->roca -= 3;
+            $this->cereales -= 2;
+
+            
+            return "Has comprado una ciudad.";
+        } else {
+            return "No tienes suficientes recursos para comprar un camino.";
+        }
+    }
+
+    public function comprarCartaDesarrollo() {
+        if ($this->roca >= 1 && $this->cereales >= 1 && $this->lana >= 1) {
+            
+            $this->roca -= 1;
+            $this->cereales -= 1;
+            $this->lana -= 1;
+            
+            return "Has comprado una carta de desarrollo.";
+        } else {
+            return "No tienes suficientes recursos para comprar un camino.";
+        }
+    }
+
+    public function mostrarRecursos(){
+        return "Los recursos disponibles son: madera {$this->madera}, roca {$this->roca}, arcilla {$this->arcilla}, cereales {$this->cereales}, lana {$this->lana}. \n ";
+    }
+
+
+}
 
 ?>
